@@ -1,6 +1,12 @@
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
+    watchHistory: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Video',
+        required: true
+    }],
+
     username: {
         type: String,
         required: [true, "Username is required!"],
