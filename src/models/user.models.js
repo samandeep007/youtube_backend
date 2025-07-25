@@ -70,7 +70,26 @@ userSchema.methods.isPasswordCorrect = async function (password) {
  * Refresh Token: A special pass used to get a new wristband when the old one expires, without buying a new ticket.
  */
 
-userSchema.methods.generateAccessToken = function(){}
+userSchema.methods.generateAccessToken = function(){
+    return jwt.sign({
+        _id: this._id,
+        email: this.email,
+        username: this.username,
+        fullName: this.fullName
+    }, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: process.env.ACCESS_TOKEN_EXPIRY
+    })
+}
+
+userSchema.methods.generateRefreshToken = function(){ //We don't need async here
+    return jwt.sign({
+        _id: this._id
+    }, process.env.REFRESH_TOKEN_SECRET, {
+        expiresIn: process.env.REFRESH_TOKEN_EXPIRY
+    })
+}
+
+
 /*
  jwt.sign({
   data: 'foobar'
