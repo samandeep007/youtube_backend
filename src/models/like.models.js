@@ -22,6 +22,6 @@ const likeSchema = new mongoose.Schema({
         ref: 'Tweet'
     }
 
-}, {timestamps: true});
+}, { timestamps: true });
 
 export const Like = mongoose.model('Like', likeSchema);
