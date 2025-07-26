@@ -39,7 +39,12 @@ app.use(cors({
 //This is a built-in middleware function in Express. It serves static files and is based on serve-static.
 app.use(express.static('public'));
 
+//routes import
+import userRouter from './routes/user.routes.js';
 
+//routes declaration
+app.use('/api/v1/users', userRouter); //Industry grade route
 
+//http://localhost:3000/users/register --> here register comes from route file, users comes from app.js file middleware
 
 export {app};
