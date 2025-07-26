@@ -8,7 +8,7 @@ const registerUser = asyncHandler(async (req, res) => {
     //extract form fields from the request body
     const {fullName, username, email, password} = req.body;
     
-    //Check if any value is null
+    //Validation: Check if any value is null
     if([fullName, username, email, password].some((field => !field))){
         throw new ApiError(400, "All fields are required. Try again!");
     }
@@ -23,6 +23,11 @@ const registerUser = asyncHandler(async (req, res) => {
 
     //get the avatar path
     const localFilePath = req?.file.path;
+
+    //Check if the file exists
+    if(!localFilePath){
+        throw new ApiError(404, "Avatar file is missing");
+    }
 
     //Upload the avatar file to cloudinary
     const avatar = await uploadOnCloudinary(localFilePath);
@@ -42,7 +47,7 @@ const registerUser = asyncHandler(async (req, res) => {
     })
 
     //get the registered user
-    const registeredUser = await User.findOne({email: email}).select('-password');
+    const registeredUser = await User.findOne({email: email}).select('-password -refreshToken');
 
     //Check if the user was created or not
     if(!registeredUser){
