@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 export const DB_NAME = "youtube_clone";
 
 export const cloudinary_options = {

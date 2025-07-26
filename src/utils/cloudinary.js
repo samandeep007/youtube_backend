@@ -4,10 +4,13 @@ import { cloudinary_options } from '../constants.js';
 
 cloudinary.config(cloudinary_options);
 
+
 export default async function uploadOnCloudinary(localFilePath) {
     try {
         //If file doesn't exist return null
         if (!localFilePath) return null;
+
+        console.log(cloudinary_options)
 
         //upload the file on cloudinary: cloudinary.uploader.upload(filePath, options)
         const response = await cloudinary.uploader.upload(localFilePath, {
@@ -16,6 +19,9 @@ export default async function uploadOnCloudinary(localFilePath) {
 
         //file has been uploaded successfully
         console.log("File has been uploaded on cloudinary successfully: ", response.url);
+
+        // Delete local file after successful upload
+        fs.unlinkSync(localFilePath);
 
         return response;
 

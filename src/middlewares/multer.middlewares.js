@@ -5,8 +5,8 @@ const storage = multer.diskStorage({
         cb(null, './public/temp') //error is null here: we are not handling the error
     },
 
-    fileName: (req, file, cb) => {
-        cb(null, file.originalName);
+    filename: (req, file, cb) => {
+        cb(null, file.originalname);
     }
 });
 
